@@ -14,6 +14,11 @@
 
 ## 1. Gambaran besar
 
+![Gambaran besar: Wemos, Realtime Database, Firestore, aplikasi Flutter, dan Firebase Authentication](images/arsitektur-besar.svg)
+
+<details>
+<summary>Versi teks (untuk disalin)</summary>
+
 ```
                   sensor realtime, perintah, config          rekaman terjadwal (15–30 mnt)
 ┌─────────────┐ ◄───────────────────────────────► ┌─────────────────────┐
@@ -28,6 +33,8 @@
                                                    └─────────────────────┘
 ```
 
+</details>
+
 Aplikasi **tidak pernah berbicara langsung dengan Wemos**. Keduanya hanya membaca/menulis database Firebase.
 Keuntungannya: aplikasi bisa dipakai dari mana saja (tidak harus satu WiFi), dan riwayat tersimpan.
 
@@ -39,6 +46,11 @@ Keuntungannya: aplikasi bisa dipakai dari mana saja (tidak harus satu WiFi), dan
 ---
 
 ## 2. Peta folder
+
+![Peta folder project: kartu per folder (lib, core, models, services, providers, screens, widgets, dan file di luar lib)](images/peta-folder.svg)
+
+<details>
+<summary>Versi teks (untuk disalin)</summary>
 
 ```
 taugeku/
@@ -93,11 +105,18 @@ taugeku/
 └── docs/                         ← dokumentasi (folder ini)
 ```
 
+</details>
+
 ---
 
 ## 3. Empat lapisan kode
 
 Kode dibagi per **tanggung jawab**. Aturan emasnya: **lapisan atas boleh memanggil lapisan bawah, tidak sebaliknya.**
+
+![Empat lapisan kode: screens/widgets, providers, services, models, beserta aturan boleh dan tidak boleh](images/empat-lapisan.svg)
+
+<details>
+<summary>Versi teks (untuk disalin)</summary>
 
 ```
  Screens / Widgets   ← menggambar layar, menangkap sentuhan
@@ -111,6 +130,8 @@ Kode dibagi per **tanggung jawab**. Aturan emasnya: **lapisan atas boleh memangg
         ▼
  Models              ← bentuk data (Map RTDB/Firestore ⇄ objek Dart)
 ```
+
+</details>
 
 | Lapisan | Boleh | Tidak boleh |
 |---|---|---|
@@ -212,6 +233,11 @@ Ini praktik yang disarankan: *jangan menaruh semuanya di Provider*.
 
 ### Contoh A — pengguna menekan tombol "Siram"
 
+![Diagram urutan tombol Siram dari layar sampai Wemos dan kembali ke toast](images/alur-siram.svg)
+
+<details>
+<summary>Versi teks (untuk disalin)</summary>
+
 ```
 1. DashboardScreen    onPressed → context.read<WateringProvider>().startWatering()
 2. WateringProvider   cek: perangkat online? aplikasi tersambung? → isWatering = true; notifyListeners()
@@ -224,10 +250,17 @@ Ini praktik yang disarankan: *jangan menaruh semuanya di Provider*.
 7. DashboardScreen    toast "Penyiraman selesai · 10 detik"; "Terakhir · 18.30" ikut berubah
                       sendiri (karena lastWatering ada di data perangkat RTDB)
 ```
+
+</details>
 Jika Wemos tidak menjawab dalam 30 detik → status menjadi `timeout` dan toast menyarankan memeriksa koneksi.
 Jika aplikasi sedang offline → tombol langsung menolak ("Tidak ada koneksi internet") agar perintah tidak mengantre.
 
 ### Contoh B — Wemos mengirim suhu baru (realtime)
+
+![Diagram urutan data sensor realtime dari Wemos sampai layar Beranda](images/alur-sensor-realtime.svg)
+
+<details>
+<summary>Versi teks (untuk disalin)</summary>
 
 ```
 1. Wemos           PATCH  RTDB users/{uid}/devices/WMS-001/sensor  {temperature: 30.1, ...}
@@ -237,7 +270,14 @@ Jika aplikasi sedang offline → tombol langsung menolak ("Tidak ada koneksi int
 5. Layar           Beranda & gauge Monitoring otomatis menampilkan 30.1°C
 ```
 
+</details>
+
 ### Contoh C — membuka grafik "7 hari" (riwayat)
+
+![Diagram urutan membuka grafik riwayat dari Firestore](images/alur-grafik.svg)
+
+<details>
+<summary>Versi teks (untuk disalin)</summary>
 
 ```
 1. MonitorScreen   pengguna memilih "7 hari" → SensorProvider.setRange(week)
@@ -246,6 +286,8 @@ Jika aplikasi sedang offline → tombol langsung menolak ("Tidak ada koneksi int
 4. SensorProvider  menerima data → diringkas jadi 8 titik → notifyListeners()
 5. MonitorScreen   grafik digambar ulang
 ```
+
+</details>
 
 ---
 
@@ -260,6 +302,10 @@ ChangeNotifierProxyProvider<AuthProvider, DeviceProvider>(
   update: (_, auth, provider) => provider!..setUser(auth.userId),
 ),
 ```
+
+Peta provider mana yang bergantung pada siapa:
+
+![Peta langganan provider: AuthProvider memberi uid ke provider data, DeviceProvider memberi deviceId ke SensorProvider dan WateringProvider](images/peta-langganan.svg)
 
 Bacanya: *"Buat `DeviceProvider` satu kali. Setiap kali `AuthProvider` berubah, panggil `setUser(...)`."*
 
@@ -279,6 +325,11 @@ pengguna (`AuthProvider`) dan perangkat yang sedang dipilih (`DeviceProvider.sel
 
 ## 8. Alur startup aplikasi
 
+![Alur startup aplikasi dari main() sampai AuthGate memilih layar](images/startup.svg)
+
+<details>
+<summary>Versi teks (untuk disalin)</summary>
+
 ```
 main()                                  ← lib/main.dart
  ├─ WidgetsFlutterBinding.ensureInitialized()
@@ -290,6 +341,8 @@ main()                                  ← lib/main.dart
             ├─ sudah login               → MainShell (header + halaman + navigasi bawah)
             └─ belum login               → LoginScreen
 ```
+
+</details>
 
 `AuthGate` mendengarkan `AuthProvider`. Saat login berhasil, `isLoggedIn` menjadi `true` dan layar berganti
 **otomatis** — tidak ada kode `Navigator.push` manual untuk login/logout.

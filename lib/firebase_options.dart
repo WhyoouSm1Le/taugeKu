@@ -55,6 +55,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '107345566196',
     projectId: 'taugeku-01',
     authDomain: 'taugeku-01.firebaseapp.com',
+    databaseURL: 'https://taugeku-01-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'taugeku-01.firebasestorage.app',
   );
 
@@ -63,6 +64,8 @@ class DefaultFirebaseOptions {
     appId: '1:107345566196:android:01f1025343e09963f401a1',
     messagingSenderId: '107345566196',
     projectId: 'taugeku-01',
+    databaseURL: 'https://taugeku-01-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'taugeku-01.firebasestorage.app',
   );
+
 }

@@ -44,6 +44,11 @@ sementara di memori aplikasi dan hilang saat logout atau aplikasi ditutup.
 Aturan praktis: *"Apakah yang penting nilai **sekarang**, atau **perkembangannya**?"*
 Sekarang → RTDB. Perkembangan/riwayat → Firestore.
 
+![Dua jalur data: sensor realtime ke Realtime Database dan rekaman terjadwal ke Firestore](images/dua-database.svg)
+
+<details>
+<summary>Versi teks (untuk disalin)</summary>
+
 ```
                  tiap 5–10 detik                      tiap 15–30 menit
  Wemos ──────► RTDB  users/{uid}/devices/WMS-001/sensor        Wemos ──────► Firestore .../readings/{id}
@@ -52,11 +57,18 @@ Sekarang → RTDB. Perkembangan/riwayat → Firestore.
         Beranda, gauge Monitoring                                         Grafik "Hari ini / 7 / 30 hari"
 ```
 
+</details>
+
 ---
 
 ## 3. Struktur Realtime Database
 
 RTDB menyimpan satu pohon JSON. Alamat tiap node dikumpulkan di `lib/services/rtdb_paths.dart`.
+
+![Struktur Realtime Database: config, sensor, command, lastWatering, activities, notifications](images/struktur-rtdb.svg)
+
+<details>
+<summary>Versi teks (untuk disalin)</summary>
 
 ```
 users
@@ -89,6 +101,8 @@ users
         └── {pushId}              title, message, type, isRead, at
 ```
 
+</details>
+
 ### 3.1 `config` — konfigurasi perangkat
 | Field | Tipe | Contoh | Dipakai oleh |
 |---|---|---|---|
@@ -116,11 +130,18 @@ setiap kali mengirim data.
 ### 3.3 `command` — perintah pompa
 Satu node saja, berisi **perintah terakhir** (perintah baru menimpa yang lama):
 
+![Diagram status perintah siram: pending menjadi done, failed, atau timeout](images/status-perintah.svg)
+
+<details>
+<summary>Versi teks (untuk disalin)</summary>
+
 ```
 App membuat → pending ──Wemos sukses──► done
                   │ ────Wemos gagal───► failed
                   └─ 30 dtk tanpa jawaban ─► timeout (ditulis oleh App)
 ```
+
+</details>
 
 ### 3.4 `lastWatering` — siram terakhir
 Diisi **Wemos** setelah pompa selesai. Aplikasi menampilkannya sebagai "Terakhir · 18.30".
@@ -151,6 +172,11 @@ aplikasi cukup mengambil 10 / 20 terakhir tanpa index khusus.
 
 ## 4. Struktur Cloud Firestore
 
+![Struktur Cloud Firestore: batches dan devices/readings](images/struktur-firestore.svg)
+
+<details>
+<summary>Versi teks (untuk disalin)</summary>
+
 ```
 users (koleksi)
 └── {uid}
@@ -161,6 +187,8 @@ users (koleksi)
             └── readings (koleksi)            ← REKAMAN SENSOR TERJADWAL
                 └── {autoId}
 ```
+
+</details>
 
 Alamat koleksi ada di `lib/services/firestore_paths.dart`.
 

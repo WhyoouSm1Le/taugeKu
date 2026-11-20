@@ -31,6 +31,8 @@ harus mengikuti format di sini agar aplikasi menampilkan data dengan benar.
 `{deviceId}` harus **sama persis** dengan ID di aplikasi, mis. `WMS-001`.
 Semua waktu di RTDB berupa **epoch milidetik** (angka).
 
+![Dua jalur data dari Wemos: sensor realtime ke Realtime Database dan rekaman terjadwal ke Firestore](images/dua-database.svg)
+
 ---
 
 ## 2. Cara Wemos mengakses Firebase
@@ -134,6 +136,11 @@ Dokumen `batches` (dokumentasi penanaman) **tidak** ditulis Wemos; itu dikelola 
 
 ## 5. Alur program Wemos (ringkas)
 
+![Alur program Wemos: setup lalu loop dengan interval berbeda untuk sensor, perintah, rekaman, jadwal, dan token](images/alur-wemos.svg)
+
+<details>
+<summary>Versi teks (untuk disalin)</summary>
+
 ```
 setup():
   sambung WiFi → sinkron jam (NTP) → login Firebase → baca config
@@ -148,6 +155,8 @@ loop():
   jadwal otomatis (config/autoWateringTimes) : siram → catat seperti di atas dengan source = "auto"
   tiap ±50 mnt  : perbarui token login (ID token berlaku ±1 jam)
 ```
+
+</details>
 
 ---
 

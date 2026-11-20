@@ -23,6 +23,11 @@ gunakan sebagai kamus saat membaca kode.
 
 Sebuah tampilan dibangun dengan menumpuk widget kecil menjadi widget besar:
 
+![Pohon widget: Scaffold berisi Column, Column berisi Text dan Row, Row berisi Icon dan Text](images/pohon-widget.svg)
+
+<details>
+<summary>Versi teks (untuk disalin)</summary>
+
 ```
 Scaffold (halaman)
  └─ Column (susunan vertikal)
@@ -31,6 +36,8 @@ Scaffold (halaman)
          ├─ Icon(...)
          └─ Text('Suhu')
 ```
+
+</details>
 
 Saat data berubah, Flutter **menggambar ulang** widget yang terkait (fungsi `build()` dipanggil lagi).
 Anda tidak mengubah tampilan secara manual; Anda **mengubah data**, lalu tampilan mengikuti.
