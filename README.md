@@ -58,6 +58,9 @@ flutter run
 | 7 | [Troubleshooting & FAQ](docs/07-TROUBLESHOOTING-DAN-FAQ.md) | Masalah umum dan solusinya |
 | 8 | [Rencana Mengajar (Live Coding)](docs/08-RENCANA-MENGAJAR-LIVE-CODING.md) | Untuk mentor: 12 sesi bertahap untuk pemula total, tiap sesi ada hasilnya |
 
+> Diagram di dokumentasi berupa gambar SVG (`docs/images/`) yang dibuat oleh skrip di `tools/diagrams/`.
+> Teks aslinya tetap ada di bagian lipat **"Versi teks (untuk disalin)"** di bawah tiap gambar.
+
 **Urutan baca yang disarankan untuk orang yang baru mengenal Flutter:**
 `01` → `05` → `02` → `03` → `04` → `06` → `07`.
 

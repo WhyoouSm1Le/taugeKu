@@ -1,8 +1,8 @@
-// Alat bantu membaca data mentah dari Realtime Database.
-//
-// Data dari RTDB datang sebagai `Object?` (bisa Map, angka, teks, atau null).
-// Fungsi-fungsi kecil di bawah mengubahnya menjadi tipe yang aman dipakai,
-// dan TIDAK melempar error bila datanya kosong atau bentuknya tidak sesuai.
+/// Alat bantu membaca data mentah dari Realtime Database.
+///
+/// Data dari RTDB datang sebagai `Object?` (bisa Map, angka, teks, atau null).
+/// Fungsi-fungsi kecil di bawah mengubahnya menjadi tipe yang aman dipakai,
+/// dan TIDAK melempar error bila datanya kosong atau bentuknya tidak sesuai.
 
 /// Mengubah data RTDB menjadi Map. Jika bukan Map -> Map kosong.
 Map<String, dynamic> asStringMap(Object? value) {

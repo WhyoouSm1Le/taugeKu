@@ -67,5 +67,4 @@ class DefaultFirebaseOptions {
     databaseURL: 'https://taugeku-01-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'taugeku-01.firebasestorage.app',
   );
-
 }

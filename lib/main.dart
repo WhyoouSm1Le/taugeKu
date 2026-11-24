@@ -1,25 +1,26 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:taugeku_mobile03/core/app_colors.dart';
-import 'package:taugeku_mobile03/core/app_constants.dart';
-import 'package:taugeku_mobile03/core/app_theme.dart';
 import 'package:taugeku_mobile03/firebase_options.dart';
-import 'package:taugeku_mobile03/providers/activity_provider.dart';
-import 'package:taugeku_mobile03/providers/auth_provider.dart';
-import 'package:taugeku_mobile03/providers/batch_provider.dart';
-import 'package:taugeku_mobile03/providers/device_provider.dart';
-import 'package:taugeku_mobile03/providers/navigation_provider.dart';
-import 'package:taugeku_mobile03/providers/notification_provider.dart';
-import 'package:taugeku_mobile03/providers/profile_provider.dart';
-import 'package:taugeku_mobile03/providers/sensor_provider.dart';
-import 'package:taugeku_mobile03/providers/toast_provider.dart';
-import 'package:taugeku_mobile03/providers/watering_provider.dart';
-import 'package:taugeku_mobile03/screens/login_screen.dart';
-import 'package:taugeku_mobile03/screens/main_shell.dart';
 
+import 'core/app_colors.dart';
+import 'core/app_constants.dart';
+import 'core/app_theme.dart';
+import 'providers/activity_provider.dart';
+import 'providers/auth_provider.dart';
+import 'providers/batch_provider.dart';
+import 'providers/device_provider.dart';
+import 'providers/navigation_provider.dart';
+import 'providers/notification_provider.dart';
+import 'providers/profile_provider.dart';
+import 'providers/sensor_provider.dart';
+import 'providers/toast_provider.dart';
+import 'providers/watering_provider.dart';
+import 'screens/login_screen.dart';
+import 'screens/main_shell.dart';
+
+/// Titik awal aplikasi. Dijalankan pertama kali saat aplikasi dibuka.
 Future<void> main() async {
   // Wajib dipanggil sebelum memakai plugin (Firebase) sebelum runApp.
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,14 +28,10 @@ Future<void> main() async {
   // Aplikasi hanya tampil tegak (portrait), sesuai desain.
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-    // Menyambungkan aplikasi ke project Firebase Anda.
+  // Menyambungkan aplikasi ke project Firebase Anda.
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  runApp(
-    DevicePreview(
-      builder: (context) => TaugeKuApp() 
-    ),
-  );
+  runApp(const TaugeKuApp());
 }
 
 /// Akar aplikasi: mendaftarkan SEMUA provider, lalu menjalankan MaterialApp.
@@ -56,7 +53,7 @@ class TaugeKuApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-         // ---- Provider mandiri ----
+        // ---- Provider mandiri ----
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
         ChangeNotifierProvider(create: (_) => ToastProvider()),
@@ -133,3 +130,4 @@ class AuthGate extends StatelessWidget {
     return auth.isLoggedIn ? const MainShell() : const LoginScreen();
   }
 }
+
