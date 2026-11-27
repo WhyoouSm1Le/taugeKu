@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:taugeku_mobile03/core/app_colors.dart';
+import 'package:taugeku_mobile03/core/app_text.dart';
+import 'package:taugeku_mobile03/widgets/eyebrow.dart';
 
-import '../core/app_colors.dart';
-import '../core/app_text.dart';
-import 'eyebrow.dart';
-
-/// Judul besar di bagian atas halaman (Monitoring, Riwayat, dst.).
 class PageTitle extends StatelessWidget {
+  final String eyebrow;
+  final String title;
+  final String? subtitle;
+  final Widget? trailing;
+
   const PageTitle({
     super.key,
     required this.eyebrow,
@@ -13,11 +16,6 @@ class PageTitle extends StatelessWidget {
     this.subtitle,
     this.trailing,
   });
-
-  final String eyebrow;
-  final String title;
-  final String? subtitle;
-  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +29,26 @@ class PageTitle extends StatelessWidget {
               children: [
                 Eyebrow(eyebrow),
                 const SizedBox(height: 4),
-                Text(title, style: AppText.sans(size: 27, weight: FontWeight.w800, letterSpacing: -1)),
+                Text(
+                  title, 
+                  style: AppText.sans(
+                    size: 27, 
+                    weight: FontWeight.w800,
+                    letterSpacing: -1,
+                  ),
+                ),
                 if (subtitle != null) ...[
                   const SizedBox(height: 3),
-                  Text(subtitle!, style: AppText.sans(size: 12, color: AppColors.muted)),
-                ],
+                  Text(
+                    subtitle!, 
+                    style: AppText.sans(
+                      size: 12,
+                      color: AppColors.muted,
+                    )
+                  )
+                ]
               ],
-            ),
+            )
           ),
           if (trailing != null) trailing!,
         ],

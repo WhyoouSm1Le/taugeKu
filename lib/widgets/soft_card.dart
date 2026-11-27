@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:taugeku_mobile03/core/app_radius.dart';
 
-import '../core/app_radius.dart';
-
-/// Kartu putih dengan bayangan lembut. Dipakai di hampir semua halaman.
-///
-/// Contoh:
-/// ```dart
-/// SoftCard(child: Text('Isi kartu'))
-/// ```
 class SoftCard extends StatelessWidget {
+  final Widget child;
+  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? margin;
+  final BorderRadius? radius;
+  final Color color;
+  final Gradient? gradient;
+  final bool showBorder;
+
   const SoftCard({
     super.key,
     required this.child,
@@ -19,18 +20,6 @@ class SoftCard extends StatelessWidget {
     this.gradient,
     this.showBorder = true,
   });
-
-  final Widget child;
-  final EdgeInsetsGeometry padding;
-  final EdgeInsetsGeometry? margin;
-
-  /// Bentuk sudut. Jika kosong memakai bentuk "daun" (24 / 9).
-  final BorderRadius? radius;
-  final Color color;
-
-  /// Jika diisi, menggantikan [color] sebagai latar kartu.
-  final Gradient? gradient;
-  final bool showBorder;
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +39,8 @@ class SoftCard extends StatelessWidget {
             color: Color.fromRGBO(67, 43, 52, 0.07),
             blurRadius: 32,
             offset: Offset(0, 13),
-          ),
-        ],
+          )
+        ]
       ),
       child: child,
     );

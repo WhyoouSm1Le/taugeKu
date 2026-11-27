@@ -2,14 +2,8 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:taugeku_mobile03/service/auth_service.dart';
 
-import '../services/auth_service.dart';
-
-/// State untuk LOGIN / LOGOUT.
-///
-/// Provider = objek yang menyimpan data + memberi tahu layar (lewat
-/// `notifyListeners()`) setiap kali data berubah, sehingga layar
-/// otomatis digambar ulang.
 class AuthProvider extends ChangeNotifier {
   AuthProvider({AuthService? authService})
       : _authService = authService ?? AuthService() {
@@ -21,11 +15,10 @@ class AuthProvider extends ChangeNotifier {
   StreamSubscription<User?>? _subscription;
 
   User? _user;
-  bool _isInitializing = true; // true selama Firebase belum menjawab "sudah login atau belum?"
-  bool _isLoading = false; // true saat proses login berjalan
+  bool _isInitializing = true;
+  bool _isLoading = false;
   String? _errorMessage;
 
-  // ---- Data yang boleh dibaca layar ----
   User? get user => _user;
   String? get userId => _user?.uid;
   String? get email => _user?.email;
@@ -40,7 +33,6 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Mencoba login. Mengembalikan true jika berhasil.
   Future<bool> signIn(String username, String password) async {
     _isLoading = true;
     _errorMessage = null;
@@ -69,7 +61,6 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Mengubah kode error Firebase menjadi kalimat yang mudah dipahami.
   String _friendlyMessage(FirebaseAuthException e) {
     switch (e.code) {
       case 'invalid-email':
@@ -94,4 +85,4 @@ class AuthProvider extends ChangeNotifier {
     _subscription?.cancel();
     super.dispose();
   }
-}
+} 

@@ -1,48 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:taugeku_mobile03/core/app_colors.dart';
 
-import '../core/app_colors.dart';
-
-/// Daftar nama ikon yang tersedia di aplikasi.
-///
-/// Ikon-ikon ini SAMA PERSIS dengan ikon SVG pada desain web (Figma Make),
-/// jadi tampilannya konsisten. Cara pakai:
-///
-/// ```dart
-/// AppIcon(AppIcons.water, size: 20, color: Colors.white)
-/// ```
 enum AppIcons {
   home, pulse, chart, device, bell, leaf, wifi, water, temp, sun, clock, refresh, more, plus, back, edit, trash, location, check, calendar, settings, logout, info,
 }
 
-/// Widget ikon sederhana: cukup sebut nama ikon, ukuran, dan warnanya.
-///
-/// Di balik layar, widget ini membuat gambar SVG dari kode path di bawah.
-/// Jika ingin menambah ikon baru:
-///   1. Tambahkan nama baru di enum [AppIcons] di atas.
-///   2. Tambahkan path SVG-nya di map [_paths] di bawah.
 class AppIcon extends StatelessWidget {
+  final AppIcons icon;
+  final double size;
+  final Color? color;
+  final double strokeWidth;
+  
   const AppIcon(
     this.icon, {
     super.key,
     this.size = 22,
     this.color,
     this.strokeWidth = 1.9,
-  });
+    });
 
-  /// Nama ikon yang ingin ditampilkan.
-  final AppIcons icon;
-
-  /// Ukuran ikon (lebar = tinggi), satuan logical pixel.
-  final double size;
-
-  /// Warna garis ikon. Jika kosong, memakai warna ikon dari tema.
-  final Color? color;
-
-  /// Ketebalan garis ikon.
-  final double strokeWidth;
-
-  /// Kumpulan path SVG (disalin otomatis dari desain web).
   static const Map<AppIcons, String> _paths = {
     AppIcons.home: r'<path d="m3 11 9-8 9 8" /> <path d="M5.5 9.5V21h13V9.5M9 21v-7h6v7" />',
     AppIcons.pulse: r'<path d="M3 12h4l2-6 4 12 2-6h6" />',

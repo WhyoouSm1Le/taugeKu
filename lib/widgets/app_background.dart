@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:taugeku_mobile03/core/app_colors.dart';
 
-import '../core/app_colors.dart';
-
-/// Latar belakang aplikasi: warna krem dengan dua cahaya lembut (pink & hijau).
 class AppBackground extends StatelessWidget {
-  const AppBackground({super.key, required this.child});
-
   final Widget child;
+
+  const AppBackground({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +21,9 @@ class AppBackground extends StatelessWidget {
                   const Color.fromRGBO(255, 190, 207, 0.25),
                   const Color.fromRGBO(255, 190, 207, 0),
                 ],
-              ),
-            ),
-          ),
+              )
+            )
+          )
         ),
         Positioned.fill(
           child: DecoratedBox(
@@ -37,11 +35,10 @@ class AppBackground extends StatelessWidget {
                   const Color.fromRGBO(185, 216, 134, 0.14),
                   const Color.fromRGBO(185, 216, 134, 0),
                 ],
-              ),
-            ),
-          ),
+              )
+            )
+          )
         ),
-        child,
       ],
     );
   }
