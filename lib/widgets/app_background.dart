@@ -39,6 +39,7 @@ class AppBackground extends StatelessWidget {
             )
           )
         ),
+        child,
       ],
     );
   }
